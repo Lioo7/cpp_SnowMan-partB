@@ -203,81 +203,24 @@ namespace ariel
     // Main function
     string snowman(int x)
     {
+        // Checks that the input is valid 
         string str = to_string(x);
         if (str.length() != LEN)
         {
             throw std::out_of_range{"The length of the input must be eight"};
         }
 
+        // Checks if the snowman has a left arm
         bool l_exist = false;
         if (str[X] != '4') {l_exist = true;}
+        // Checks if the left hand of snowman is up
         bool l_up = false;
         if (str[X] == '2') {l_up = true;}
+        // Checks if the right hand of snowman is up
         bool r_up = false;
         if (str[Y] == '2') {r_up = true;}
 
-        // if(left_exist){
-        //     snow += " ";
-        //     snow += hat(str[0]);
-        //     snow += "\n";
-        // }
-        // else{
-        //     snow += hat(str[0]);
-        //     snow += "\n";
-        // }
-
-        // if(left_up){
-        //     snow += left_arm(str[4]);
-        //     snow += "(";
-        //     snow += left_eye(str[2]);
-        //     snow += nose(str[1]);
-        //     snow += right_eye(str[3]);
-        //     snow += ")";
-        // }
-        // else{
-        //     snow += " ";
-        //     snow += "(";
-        //     snow += left_eye(str[2]);
-        //     snow += nose(str[1]);
-        //     snow += right_eye(str[3]);
-        //     snow += ")";
-        // }
-
-        // if(right_up){
-        //     snow += right_arm(str[5]);
-        //     snow += "\n";
-        // }
-
-        // if(!left_up){
-        //     snow += left_arm(str[4]);
-        // }
-
-        // if(!left_exist || !left_up){
-        //     snow += left_arm(str[4]);
-        //     snow += "(";
-        //     snow += torso(str[6]);
-        //     snow += ")";
-        // }
-
-        // if(!right_up){
-        //     snow += right_arm(str[5]);
-        //     snow += "\n";
-        // }
-        // else{
-        //     snow += "\n";
-        // }
-
-        // if(left_exist){
-        //     snow += " ";
-        //     snow += "(";
-        //     snow += base(str[7]);
-        //     snow += ")";
-        // }
-        // else{
-        //     snow += "(";
-        //     snow += base(str[7]);
-        //     snow += ")";
-        // }
+        // Builds the snowman
 
         // Creates a variable for each part of the body
         string snow_body;
@@ -290,6 +233,7 @@ namespace ariel
         string torso_s = torso(str[T]);
         string base_s = base(str[B]);
 
+        // Adds space before the hat if the snowman has no left hand 
         if (!l_exist)
         {
             switch (str[H])
@@ -314,28 +258,31 @@ namespace ariel
 
         string head_s = "(" + left_eye_s + nose_s + right_eye_s + ")";
 
+        // Adds space before the base and the torso if the left is up
         if (l_up)
         {
             head_s = left_arm_s + head_s;
             base_s = " " + base_s;
             torso_s = " " + torso_s;
         }
+        // If not adds space before the head and the base
         else if (l_exist && !l_up)
         {
             torso_s = left_arm_s + torso_s;
             head_s = " " + head_s;
             base_s = " " + base_s;
         }
-
+        // Adds the arm after the head if the right arm is up
         if (r_up)
         {
             head_s = head_s + right_arm_s;
         }
+        // Adds the right arm after the torso if the right arm is not up 
         else if (!r_up)
         {
             torso_s = torso_s + right_arm_s;
         }
-
+        // Unions all the parts of the snowman and returns it
         snow_body = hat_s + "\n" + head_s + "\n" + torso_s + "\n" + base_s;
         return snow_body;
     }
